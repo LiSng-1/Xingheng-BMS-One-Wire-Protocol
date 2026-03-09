@@ -1,37 +1,63 @@
 {
-  "name": "Xingheng BMS One-Wire Protocol",
-  "version": "1.0.0",
-  "description": "Decoder for Xingheng BMS One-Wire Protocol (Doc A1.3.3). Decodes Sync, Data Bits (LSB), and Frames (Public/Private) with Checksum validation.",
-  "author": "AI Assistant",
-  "license": "MIT",
-  "homepage": "",
-  "type": "analyzer",
-  "api_version": "2.0",
-  "python_script": "xingheng_analyzer.py",
-  "settings": [
-    {
-      "id": "channel",
-      "label": "Input Channel",
-      "type": "integer",
-      "default": 0,
-      "min": 0,
-      "max": 15,
-      "description": "The logic analyzer channel connected to the BMS One-Wire line."
+  "protocol_version": "A1.3.3",
+  "saleae_config": {
+    "sample_rate_mhz": 1.0,
+    "voltage_threshold_v": 2.0,
+    "sample_depth_m": 1.0,
+    "trigger_type": "rising_edge"
+  },
+  "protocol_constants": {
+    "timing_ms": {
+      "SYNC_T1_MIN": 10.0,
+      "SYNC_T2": 1.0,
+      "BIT_PERIOD": 2.0,
+      "BIT1_T1": 0.5,
+      "BIT1_T2": 1.5,
+      "BIT0_T1": 1.5,
+      "BIT0_T2": 0.5,
+      "STOP_T1": 5.0,
+      "STOP_T2_MIN": 50.0
     },
-    {
-      "id": "tolerance_ms",
-      "label": "Timing Tolerance (ms)",
-      "type": "float",
-      "default": 0.4,
-      "min": 0.1,
-      "max": 1.0,
-      "description": "Allowed deviation for pulse width detection (default 0.4ms)."
+    "message": {
+      "PUBLIC_ID": 1,
+      "PUBLIC_LEN": 20,
+      "SINGLE_VOLT_ID": 59,
+      "UNIQUE_CODE_ID": 60
+    },
+    "checksum": {
+      "CHECKSUM_MASK": 255
     }
-  ],
-  "tags": [
-    "BMS",
-    "One-Wire",
-    "Xingheng",
-    "Custom Protocol"
-  ]
+  },
+  "error_tolerance": {
+    "SYNC_T2_TOLERANCE": 0.2,
+    "BIT_PERIOD_TOLERANCE": 0.2,
+    "BIT_T1_TOLERANCE": 0.2,
+    "STOP_T1_TOLERANCE": 0.5
+  },
+  "value_conversion": {
+    "rated_voltage": {
+      "precision": 0.1,
+      "offset": 0.0
+    },
+    "rated_capacity": {
+      "precision": 0.1,
+      "offset": 0.0
+    },
+    "soc": {
+      "precision": 0.5,
+      "offset": 0.0
+    },
+    "current_voltage": {
+      "precision": 0.1,
+      "offset": 0.0
+    },
+    "current_current": {
+      "precision": 0.1,
+      "offset": -500.0
+    },
+    "temperature": {
+      "precision": 1.0,
+      "offset": -40.0
+    }
+  }
 }
